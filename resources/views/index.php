@@ -4,6 +4,18 @@
 	<title>Construye tu Matriz del Tiempo (de Stephen Covey)</title>
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css">
+    <style type="text/css" media="screen">
+    	.text-center{
+    		text-align: center;
+    		width: 100%;
+    	}
+    	.default-item{
+    		text-align: center;
+    	}
+    	.move-icon{
+    		cursor: move;
+    	}
+    </style>
 </head>
 <body ng-app="mainApp">
 	<md-content ng-controller="MainController">
@@ -20,7 +32,7 @@
 
 		<md-content>
 			<div layout="row" layout-fill>
-	            <form flex="65" name="taskForm" ng-submit="add()" layout="column">
+	            <form flex="60" name="taskForm" ng-submit="add()" layout="column">
 	                <div layout-gt-xs="row">
 	                    <md-input-container class="md-block" flex-gt-xs> 
 	    			        <label>Actividad o aspecto</label>
@@ -32,7 +44,7 @@
 	    			    <!--<md-input-container class="md-block" flex-gt-xs>
 	    			        <label>Categoria</label>
 	                        <md-select  ng-model="tarea.categoria">
-	                            <md-option value="i_u">Importante / Urgente</md-option>
+	                            <md-option value="i_u"></md-option>
 	                            <md-option value="i_nu">Importante / No Urgente</md-option>
 	                            <md-option value="ni_u">No Importante / Urgente</md-option>
 	                            <md-option value="ni_nu">No Importante / No Urgente</md-option>
@@ -40,9 +52,9 @@
 	                    </md-input-container>-->
 	                    <md-input-container>
 				            <label>Fecha límite</label>
-				            <md-datepicker ng-model="tarea.fecha"></md-datepicker>
+				            <md-datepicker ng-model="tarea.fecha" md-placeholder="Fecha límite" ng-required="false"></md-datepicker>
 				        </md-input-container>
-	                    <md-button type="submit" class="md-raised md-primary">Agregar</md-button>
+	                    <md-button type="submit" class="md-raised md-primary" aria-label="Agregar tarea">Agregar</md-button>
 	                </div>
 	            </form>
 	            <div flex="30">
@@ -50,106 +62,149 @@
 	    	          <h3 class="adds">ADDs</h3>
 	    	        </div>
 	            </div>
+	            <div flex="5">
+	            	<md-button type="submit" class="md-raised md-primary" aria-label="Renovar tareas" ng-click="renovar($event)">
+	            		 <md-icon md-svg-src="img/icons/renew.svg"></md-icon>
+	            	</md-button>
+	            </div>
 	        </div>
 			<div ng-cloak layout-gt-sm="row" layout="column">
 				<div flex-gt-sm="50" flex>
-				    <md-toolbar layout="row" class="md-hue-3">
+				    <md-toolbar layout="row" class="md-primary">
 				      <div class="md-toolbar-tools">
 				        <span>Importante / Urgente</span>
 				      </div>
 				    </md-toolbar>
 					<md-content>
-					    <md-list flex>
-					        <md-subheader class="md-no-sticky">Salud, proyectos presionantes</md-subheader>
-					        <md-list-item class="md-3-line" ng-repeat="item in importantes_urgentes" ng-click="null">
+					    <md-list flex ng-drop="true" class="bg-iu"
+					    	ng-drop-success="onDropIU($data,$event)">
+					        <md-subheader class="md-primary">Salud, proyectos presionantes</md-subheader>
+					        <md-list-item class="md-3-line" 
+					        	ng-repeat="item in importantes_urgentes" 
+					        	ng-drag="true" ng-drag-data="item" 
+					        	ng-drag-success="onDragTask($data,$event)">
+					          <md-icon md-svg-icon="img/icons/move.svg" aria-label="Mover tarea" class="md-avatar-icon move-icon" ></md-icon>
 					          <div class="md-list-item-text" layout="column">
 					            <h3> {{ item.tarea }} </h3>
 					            <p> {{ item.fecha }} </p>
 					          </div>
+					          <md-icon md-svg-icon="img/icons/edit.svg"  ng-click="editTask(item)" aria-label="Editar tarea" class="md-secondary md-hue-3" ></md-icon>
+					          <md-icon md-svg-icon="img/icons/delete.svg"  ng-click="deleteTask(item,$event)" aria-label="Eliminar tarea" class="md-secondary md-hue-3" ></md-icon>
 					        </md-list-item>
 					        <md-divider ></md-divider>
+					        <md-list-item class="md-3-line default-item animate-show-hide" ng-hide="importantes_urgentes.length">
+					          <div class="md-list-item-text" layout="column">
+					            <h3> Agrega y Arrastra aquí tus tareas  </h3>
+					            <p> Importantes / Urgentes </p>
+					          </div>
+					        </md-list-item>
 					    </md-list>
-					    <!-- The dnd-list directive allows to drop elements into it.
-						     The dropped data will be added to the referenced list -->
-						<ul dnd-list="list">
-						    <!-- The dnd-draggable directive makes an element draggable and will
-						         transfer the object that was assigned to it. If an element was
-						         dragged away, you have to remove it from the original list
-						         yourself using the dnd-moved attribute -->
-						    <li ng-repeat="item in list"
-						        dnd-draggable="item"
-						        dnd-moved="list.splice($index, 1)"
-						        dnd-effect-allowed="move"
-						        dnd-selected="models.selected = item"
-						        ng-class="{'selected': models.selected === item}"
-						        >
-						        {{item.label}}
-						    </li>
-						</ul>
 					</md-content>
 
-					<md-toolbar layout="row" class="md-hue-3">
+					<md-toolbar layout="row" class="md-hue-1 md-primary">
 				      <div class="md-toolbar-tools">
 				        <span>No Importante / Urgente</span>
 				      </div>
 				    </md-toolbar>
 					<md-content>
-					    <md-list flex>
-					        <md-subheader class="md-no-sticky">Mensajes, llamadas, peticiones imprevistas, reuniones inncesarias</md-subheader>
-					        <md-list-item class="md-3-line" ng-repeat="item in importantes" ng-click="null">
-					          <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="Quien" />
+					    <md-list flex ng-drop="true"
+					    	ng-drop-success="onDropNIU($data,$event)">
+					        <md-subheader class="md-hue-1 md-primary">Mensajes, llamadas, peticiones imprevistas, reuniones inncesarias</md-subheader>
+					        <md-list-item class="md-3-line" 
+					        	ng-repeat="item in noimportantes_urgentes"
+					          	ng-drag="true" ng-drag-data="item" 
+					        	ng-drag-success="onDragTask($data,$event)">
+					        	<md-icon md-svg-icon="img/icons/move.svg" aria-label="Mover tarea" class="md-avatar-icon move-icon" ></md-icon>
 					          <div class="md-list-item-text" layout="column">
-					            <h3> Quien </h3>
-					            <h4> Que </h4>
-					            <p> Notas </p>
+					            <h3> {{ item.tarea }} </h3>
+					            <p> {{ item.fecha }} </p>
 					          </div>
+					          <md-icon md-svg-icon="img/icons/edit.svg"  ng-click="editTask(item)" aria-label="Editar tarea" class="md-secondary md-hue-3" ></md-icon>
+					          <md-icon md-svg-icon="img/icons/delete.svg"  ng-click="deleteTask(item,$event)" aria-label="Eliminar tarea" class="md-secondary md-hue-3" ></md-icon>
 					        </md-list-item>
 					        <md-divider ></md-divider>
+							<md-list-item class="md-3-line default-item animate-show-hide" ng-hide="noimportantes_urgentes.length">
+					          <div class="md-list-item-text" layout="column">
+					            <h3> Agrega y Arrastra aquí tus tareas</h3>
+					            <p> No Importantes / Urgentes </p>
+					          </div>
+					        </md-list-item>
 					    </md-list>
 					</md-content>
 				</div>
 
 				<div flex-gt-sm="50" flex>
-				    <md-toolbar layout="row" class="md-hue-3">
+				    <md-toolbar layout="row" class="md-hue-2 md-primary">
 				      <div class="md-toolbar-tools">
 				        <span>Importante / No Urgente</span>
 				      </div>
 				    </md-toolbar>
 					<md-content>
-					    <md-list flex>
-					        <md-subheader class="md-no-sticky">Crecimiento personal, Actividades preventivas</md-subheader>
-					        <md-list-item class="md-3-line" ng-repeat="item in importantes" ng-click="null">
-					          <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="Quien" />
+					    <md-list flex ng-drop="true"
+					    	ng-drop-success="onDropINU($data,$event)">
+					        <md-subheader class="md-hue-2 md-primary">Crecimiento personal, Actividades preventivas</md-subheader>
+					        <md-list-item class="md-3-line" 
+					        	ng-repeat="item in importantes_nourgentes"
+					          	ng-drag="true" ng-drag-data="item" 
+					        	ng-drag-success="onDragTask($data,$event)">
+					        	<md-icon md-svg-icon="img/icons/move.svg" aria-label="Mover tarea" class="md-avatar-icon move-icon" ></md-icon>
 					          <div class="md-list-item-text" layout="column">
-					            <h3> Quien </h3>
-					            <h4> Que </h4>
-					            <p> Notas </p>
+					            <h3> {{ item.tarea }} </h3>
+					            <p> {{ item.fecha }} </p>
 					          </div>
+					          <md-icon md-svg-icon="img/icons/edit.svg"  ng-click="editTask(item)" aria-label="Editar tarea" class="md-secondary md-hue-3" ></md-icon>
+					          <md-icon md-svg-icon="img/icons/delete.svg"  ng-click="deleteTask(item,$event)" aria-label="Eliminar tarea" class="md-secondary md-hue-3" ></md-icon>
 					        </md-list-item>
 					        <md-divider ></md-divider>
+					        <md-list-item class="md-3-line default-item animate-show-hide" ng-hide="importantes_nourgentes.length">
+					          <div class="md-list-item-text" layout="column">
+					            <h3> Agrega y Arrastra aquí tus tareas  </h3>
+					            <p> Importantes / No Urgentes </p>
+					          </div>
+					        </md-list-item>
 					    </md-list>
 					</md-content>
 
-					<md-toolbar layout="row" class="md-hue-3">
+					<md-toolbar layout="row" class="md-hue-3 md-primary">
 				      <div class="md-toolbar-tools">
 				        <span>No Importante / No Urgente</span>
 				      </div>
 				    </md-toolbar>
 					<md-content>
-					    <md-list flex>
-					        <md-subheader class="md-no-sticky">Redes sociales sin objetivo, vicios, chismes</md-subheader>
-					        <md-list-item class="md-3-line" ng-repeat="item in importantes" ng-click="null">
-					          <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="Quien" />
+					    <md-list flex ng-drop="true"
+					    	ng-drop-success="onDropNINU($data,$event)">
+					        <md-subheader class="md-hue-3 md-primary">Redes sociales sin objetivo, vicios, chismes</md-subheader>
+					        <md-list-item class="md-3-line" 
+					        	ng-repeat="item in noimportantes_nourgentes"
+					        	ng-drag="true" ng-drag-data="item" 
+					        	ng-drag-success="onDragTask($data,$event)">
+					        	<md-icon md-svg-icon="img/icons/move.svg" aria-label="Mover tarea" class="md-button md-hue-3 md-primary" ></md-icon>
 					          <div class="md-list-item-text" layout="column">
-					            <h3> Quien </h3>
-					            <h4> Que </h4>
-					            <p> Notas </p>
+					            <h3> {{ item.tarea }} </h3>
+					            <p> {{ item.fecha }} </p>
 					          </div>
+					          <md-icon md-svg-icon="img/icons/edit.svg"  ng-click="editTask(item)" aria-label="Editar tarea" class="md-secondary md-hue-3" ></md-icon>
+					          <md-icon md-svg-icon="img/icons/delete.svg"  ng-click="deleteTask(item,$event)" aria-label="Eliminar tarea" class="md-secondary md-hue-3" ></md-icon>
 					        </md-list-item>
 					        <md-divider ></md-divider>
+					        <md-list-item class="md-3-line default-item animate-show-hide" ng-hide="noimportantes_nourgentes.length">
+					          <div class="md-list-item-text" layout="column">
+					            <h3> Agrega y Arrastra aquí tus tareas  </h3>
+					            <p> No Importantes / No Urgentes </p>
+					          </div>
+					        </md-list-item>
 					    </md-list>
 					</md-content>
 				</div>
+			</div>
+			<hr>
+			<div layout="row">
+				<md-toolbar layout="row" class="md-hue-3 md-accent">
+			      <div class="md-toolbar-tools " ng-drop="true"
+			    	ng-drop-success="onDropDelete($data,$event)">
+			        <span class="text-center">Arrastra las tareas <strong>Aquí</strong> para eliminarlas </span>
+			      </div>
+			    </md-toolbar>
 			</div>
 		</md-content>
     </md-content>
@@ -158,11 +213,16 @@
 	<script src="./bower_components/angular-animate/angular-animate.js"></script>
 	<script src="./bower_components/angular-material/angular-material.js"></script>
 	<script src="./bower_components/angular-messages/angular-messages.js"></script>
-	<script src="./bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
 	<script src="./bower_components/ngstorage/ngStorage.js"></script>
+	<script src="./bower_components/ngDraggable/ngDraggable.js"></script>
 
 	<script>
         angular.module( 'mainApp', [ 'ngMaterial' ] )
+        .config(function($mdThemingProvider) {
+		  $mdThemingProvider.theme('default')
+		    .primaryPalette('pink')
+		    .accentPalette('orange');
+		})
     </script>
     <script src="./js/controladores.js" type="text/javascript"></script>
 </body>
