@@ -21,6 +21,57 @@
     		width: 100%;
     		height: 400px;
     	}
+    	.default{
+
+    	}
+		.blue{
+			background-color: rgb(33, 150, 243) !important;
+    		color: rgb(255, 255, 255) !important;
+		}
+		.light-blue{
+			background-color: rgb(3, 169, 244) !important;
+    		color: rgba(0, 0, 0, 0.87) !important;
+		}
+		.green{
+			background-color: rgb(76, 175, 80) !important;
+		    color: rgb(255, 255, 255) !important;
+		}
+		.light-green{
+			background-color: rgb(139, 195, 74) !important;
+    		color: rgba(0, 0, 0, 0.87) !important;
+		}
+		.pink{
+			background-color: rgb(233, 30, 99) !important;
+    		color: rgb(255, 255, 255) !important;
+		}
+		.lime{
+			background-color: rgb(205, 220, 57) !important;
+    		color: rgba(0, 0, 0, 0.87) !important;
+		}
+		.grey{
+			background-color: rgb(33, 33, 33) !important;
+    		color: rgba(255, 255, 255, 0.87) !important;
+		}
+		.blue-grey{
+			background-color: rgb(96, 125, 139) !important;
+    		color: rgb(255, 255, 255) !important;
+		}
+		.orange{
+			background-color: rgb(255, 152, 0) !important;
+    		color: rgba(0, 0, 0, 0.87) !important;
+		}
+		.amber{
+		    background-color: rgb(255, 193, 7) !important;
+		    color: rgba(0, 0, 0, 0.87) !important;
+		}
+		.teal{
+			background-color: rgb(0, 150, 136) !important;
+    		color: rgb(255, 255, 255) !important;
+		}
+		.cyan{
+			background-color: rgb(0, 188, 212) !important;
+    		color: rgba(0, 0, 0, 0.87) !important;
+		}
     </style>
 
     <meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
@@ -234,19 +285,19 @@
 					<md-tab label="Diseña & Exporta">
         				<md-content class="md-padding" >
         					<div layout="row" layout-align="space-around center">
-								<md-button class="md-primary md-raised" ng-click="theme = 'default'">Default</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'blue'">Blue</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'light-blue'">Light-Blue</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'green'">Green</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'light-green'">Light Green</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'pink'">Pink</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'lime'">Lime</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'grey'">Grey</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'blue-grey'">Blue Grey</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'orange'">Orange</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'amber'">Amber</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'teal'">Teal</md-button>
-	  							<md-button class="md-primary md-raised" ng-click="theme = 'cyan'">Cyan</md-button>
+								<md-button class="md-primary md-raised default" ng-click="theme = 'default'">Default</md-button>
+	  							<md-button class="md-raised blue" ng-click="theme = 'blue'">Blue</md-button>
+	  							<md-button class="md-raised light-blue" ng-click="theme = 'light-blue'">Light-Blue</md-button>
+	  							<md-button class="md-raised green" ng-click="theme = 'green'">Green</md-button>
+	  							<md-button class="md-raised light-green" ng-click="theme = 'light-green'">Light Green</md-button>
+	  							<md-button class="md-raised pink" ng-click="theme = 'pink'">Pink</md-button>
+	  							<md-button class="md-raised lime" ng-click="theme = 'lime'">Lime</md-button>
+	  							<md-button class="md-raised grey" ng-click="theme = 'grey'">Grey</md-button>
+	  							<md-button class="md-raised blue-grey" ng-click="theme = 'blue-grey'">Blue Grey</md-button>
+	  							<md-button class="md-raised orange" ng-click="theme = 'orange'">Orange</md-button>
+	  							<md-button class="md-raised amber" ng-click="theme = 'amber'">Amber</md-button>
+	  							<md-button class="md-raised teal" ng-click="theme = 'teal'">Teal</md-button>
+	  							<md-button class="md-raised cyan" ng-click="theme = 'cyan'">Cyan</md-button>
 							</div>
 							<div layout-gt-sm="row" layout="column" class="content-wrapper">
 								<div flex-gt-sm="50" flex>
