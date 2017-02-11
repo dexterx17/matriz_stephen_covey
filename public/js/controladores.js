@@ -1,5 +1,6 @@
 angular.module( 'mainApp', [ 'ngMaterial', 'ngMessages', 'ngStorage', 'ngDraggable'] )
 .controller("MainController", function($scope, $localStorage, $mdToast, $mdDialog){
+
 	$scope.tarea={
 		'tarea':'',
 		'categoria':'i_u',
@@ -12,6 +13,85 @@ angular.module( 'mainApp', [ 'ngMaterial', 'ngMessages', 'ngStorage', 'ngDraggab
 		'ni_u':'No Importante / Urgente',
 		'ni_nu':'No Importante / No Urgente'
 	};
+
+	$scope.theme = 'default';
+	$scope.selectedTab = 0;
+	$scope.pdf_url = '';
+	$scope.img_url = '';
+	$scope.svg_url = '';
+
+	$scope.exportar_pdf = function(){
+		// Convert the DOM element to a drawing using kendo.drawing.drawDOM
+        kendo.drawing.drawDOM($(".content-wrapper"))
+        .then(function(group) {
+        	$scope.selectedTab = 2;
+            // Render the result as a PDF file
+            return kendo.drawing.exportPDF(group, {
+                paperSize: "auto",
+                margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
+            });
+        })
+        .done(function(data) {
+        	$scope.selectedTab = 2;
+        	$scope.pdf_url = data;
+        });
+	}
+	$scope.exportar_img = function(){
+		 // Convert the DOM element to a drawing using kendo.drawing.drawDOM
+        kendo.drawing.drawDOM($(".content-wrapper"))
+        .then(function(group) {
+        	$scope.selectedTab = 2;
+            // Render the result as a PNG image
+            return kendo.drawing.exportImage(group);
+        })
+        .done(function(data) {
+        	$scope.selectedTab = 2;
+            $scope.img_url = data;
+        });
+	}
+	$scope.exportar_svg = function(){
+		 // Convert the DOM element to a drawing using kendo.drawing.drawDOM
+        kendo.drawing.drawDOM($(".content-wrapper"))
+        .then(function(group) {
+        	$scope.selectedTab = 2;
+            // Render the result as a SVG document
+            return kendo.drawing.exportSVG(group);
+        })
+        .done(function(data) {
+        	$scope.selectedTab = 2;
+            $scope.svg_url = data;
+        });
+	}
+
+	$scope.download_pdf = function(){
+		if($scope.pdf_url!=''){
+			// Save the PDF file
+	        kendo.saveAs({
+	            dataURI: $scope.pdf_url,
+	            fileName: "matriz.pdf"
+	        });
+		}
+	}
+
+	$scope.download_img = function(){
+		if($scope.img_url!=''){
+			// Save the PNG file
+	        kendo.saveAs({
+	            dataURI: $scope.img_url,
+	            fileName: "matriz.png"
+	        });
+		}
+	}
+
+	$scope.download_svg = function(){
+		if($scope.svg_url!=''){
+			// Save the SVG file
+	        kendo.saveAs({
+	            dataURI: $scope.svg_url,
+	            fileName: "matriz.svg"
+	        });
+		}
+	}
 
 	$scope.importantes_urgentes = $localStorage.importantes_urgentes || [];
 	$scope.importantes_nourgentes = $localStorage.importantes_nourgentes || [];
