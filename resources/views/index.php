@@ -3,6 +3,8 @@
 <head>
 	<title>Matriz del Tiempo (de Stephen Covey)</title>
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+	 <meta name="description" content="Prioriza tu tiempo y tus actividades, planifica para alcanzar tus metas con la ayuda de esta herramienta">
+  	<meta name="keywords" content="Matriz del tiempo, Organiza tu tiempo, Matriz de Sthephen Covey">
     <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="./bower_components/kendo/styles/web/kendo.common-material.css">
     <link rel="stylesheet" href="./bower_components/kendo/styles/web/kendo.default.css">
