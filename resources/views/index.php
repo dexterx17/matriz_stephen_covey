@@ -4,7 +4,7 @@
 	<title>Matriz del Tiempo (de Stephen Covey)</title>
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 	 <meta name="description" content="Prioriza tu tiempo y tus actividades, planifica para alcanzar tus metas con la ayuda de esta herramienta">
-  	<meta name="keywords" content="Matriz del tiempo, Organiza tu tiempo, Matriz de Sthephen Covey">
+  	<meta name="keywords" content="Matriz del tiempo, Organiza tu tiempo, Matriz de Sthephen Covey, time management matrix">
     <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="./bower_components/kendo/styles/web/kendo.common-material.css">
     <link rel="stylesheet" href="./bower_components/kendo/styles/web/kendo.default.css">
@@ -76,11 +76,11 @@
 		}
     </style>
 
-    <meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
+    <meta property="og:url"           content="http://169.57.152.110/matriz/public/" />
   	<meta property="og:type"          content="website" />
   	<meta property="og:title"         content="Matriz de Tiempo (Stephen Covey)" />
   	<meta property="og:description"   content="Prioriza tu tiempo y tus actividades, planifica para alcanzar tus metas con la ayuda de esta herramienta" />
-  	<meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" />
+  	<meta property="og:image"         content="http://169.57.152.110/matriz/public/img/imagen.png" />
 </head>
 <body ng-app="mainApp">
 	<md-content ng-controller="MainController" md-theme="{{theme}}" md-theme-watch="true">
